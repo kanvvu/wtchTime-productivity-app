@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>javascript simple stopwatch</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&family=Roboto+Mono:wght@700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="timestamps">
+            <h2>All latest activity:</h2>
+            
+            <div th:if="${items.isEmpty}">
+                none
+            </div>
+
+            <div th:unless="${items.isEmpty}" class="timestamp">
+                <table>
+                    <tr>
+                        <th>date</th>
+                        <th>duration</th>
+                        <th>category</th>
+                        <th>description</th>
+                    </tr>
+                    <tr th:each="item : ${items}">
+                        <td class="date" th:text="${item.getDate}">
+                        <td class="time" th:text="${item.getTime}">
+                        <td th:text="${item.category.categoryName}">
+                        <td th:text="${item.description}">
+                    </tr>
+                </table>
+            </div>
+
+            <a href="/">go back to home</a>
+        </div>
+
+    </div>
+
+</body>
+
+</html>

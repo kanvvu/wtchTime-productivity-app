@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>javascript simple stopwatch</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&family=Roboto+Mono:wght@700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="content">
+            <h2>Statistics</h2>
+            <a href="/">go back home</a>
+            <div class="just-a-test">
+                <div class="form-wrapper">
+                    <form action="/statistics/specific" method="get">
+                        <input type="date" name="dayDate">
+                        <input type="hidden" name="week" id="form-week">
+                        <input type="hidden" name="year" id="form-year">
+                        <button type="submit" id="date-form-submit">change</button>
+                    </form>
+                </div>
+                <div class="pie-wrapper">
+                    <canvas id="pie-chart-today"></canvas>
+                </div>
+            </div>
+            <div class="bar-wrapper">
+                <div class="form-wrapper">
+
+                    <form action="/statistics/specific">
+                        <select name="year" id="" onchange="this.form.submit()">
+                            <th:block th:each="year, i : ${years}">
+                                <option  th:if="${prevYear == year}" th:id="yearSelected" th:value="${year}" th:text="${year}" selected></option>
+                                <option  th:unless="${prevYear == year}" th:id="'year' + ${i.count}" th:value="${year}" th:text="${year}"></option>
+                            </th:block>
+                        </select>
+                    </form>
+
+                    <form action="/statistics/specific">
+                        <input type="hidden" name="year" id="week-form-year">
+                        <select name="week" id="">
+                            <th:block th:each="week, i : ${weeks}">
+                                <option th:if="${prevWeek == week}" th:id="weekSelected" th:value="${week}" th:text="${week}" selected></option>
+                                <option th:unless="${prevWeek == week}" th:id="'week' + ${i.count}" th:value="${week}" th:text="${week}"></option>
+                            </th:block>
+                        </select>
+
+                        <button id="week-form-submit" type="submit"> change </button>
+                    </form>
+                </div>
+                <div class="bar-wrapper">
+                    <canvas id="bar-chart-week"></canvas>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script th:inline="javascript">
+        var times = [[${times}]];
+        var weekTime = [[${weekTime}]];
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="/script/chart.js"></script>
+    <script src="/script/statistics.js"></script>
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>javascript simple stopwatch</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&family=Roboto+Mono:wght@700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="categories">
+            <h2>Categories</h2>
+            <div class="add-category">
+                <form action="#" th:action="@{/category}" th:object="${newCat}" method="POST">
+                    <label for="">Add new category</label>
+                    <input type="text" th:field="*{categoryName}">
+                    <button type="submit">Add</button>
+                </form>
+            </div>
+            <div th:if="${categories.isEmpty}">
+                none
+            </div>
+
+            <div th:unless="${categories.isEmpty}">
+                <table>
+                    <tr>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                    <tr th:each="cat : ${categories}">
+                        <td th:text=${cat.id}></td>
+                        <td th:text="${cat.categoryName}"></td>
+                        <td>
+                            <a th:href="@{category/delete/{id}(id=${cat.id})}">Delete</a>
+                            <a th:href="@{category/edit/{id}(id=${cat.id})}">Edit</a>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <a href="/">go back to home</a>
+        </div>
+
+    </div>
+
+</body>
+</html>

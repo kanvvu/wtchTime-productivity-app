@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>javascript simple stopwatch</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&family=Roboto+Mono:wght@700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="content">
+            <h2>Edit category</h2>
+            <form action="#" th:action="@{/category}" th:object="${edit}" method="POST">
+                <label for="">Category name</label>
+                <input type="hidden" th:field="*{id}">
+                <input type="text"  th:field="*{categoryName}" name="" id="">
+                <button type="submit">Save</button>
+            </form>
+        </div>
+
+    </div>
+
+</body>
+</html>
