@@ -1,7 +1,39 @@
 body {
-    background: #448aff;
+  background-color: #448aff;;
 }
 
-.col {
-    background: white;
+.wrapper {
+  background-color: white;
 }
+
+.container {
+  font-family: 'Poppins', sans-serif;
+  max-width: 500px;
+}
+
+.timerDisplay {
+  font-family: 'Roboto mono', monospace;
+  font-size: 40px;
+  color: #448aff;
+  box-shadow: 0 0 20px rgba(0, 139, 253, 0.25);
+
+}
+
+.navigation-buttons a {
+  color: white;
+  background-color: #448aff;
+}
+
+
+
+@media (max-width: 485px) {
+  .timerDisplay {
+    font-size: 25px;
+  }
+  .timestamps table {
+    font-size: 12px;
+  }
+}
+
+
+  
