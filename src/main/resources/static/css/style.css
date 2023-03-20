@@ -30,7 +30,8 @@ body {
   .timerDisplay {
     font-size: 25px;
   }
-  .timestamps table {
+  
+  table {
     font-size: 12px;
   }
 }
