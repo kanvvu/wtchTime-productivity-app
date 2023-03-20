@@ -6,6 +6,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&family=Roboto+Mono:wght@700&display=swap"
         rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="/css/style.css">
 
 </head>
@@ -13,30 +16,40 @@
 <body>
 
     <div class="container">
-        <div class="content">
+        <div class="wrapper d-flex flex-column p-2 mt-2 rounded">
             <h2>Statistics</h2>
-            <a href="/">go back home</a>
-            <div class="just-a-test">
-                <div class="form-wrapper">
-                    <form action="/statistics/specific" method="get">
-                        <input type="date" name="dayDate">
-                        <input type="hidden" name="week" id="form-week">
-                        <input type="hidden" name="year" id="form-year">
-                        <button type="submit" id="date-form-submit">change</button>
-                    </form>
-                </div>
-                <div class="pie-wrapper">
-                    <canvas id="pie-chart-today"></canvas>
-                </div>
+            <div class="">
+                <a class="btn btn-outline-primary" href="/">go back home</a>
             </div>
+
+            <div class="py-4">
+                    <div class="">
+                        <form class="d-flex justify-content-center" action="/statistics/specific" method="get">
+                            <div class="px-2">
+                                <input type="date" name="dayDate">
+                            </div>
+                            <input type="hidden" name="week" id="form-week">
+                            <input type="hidden" name="year" id="form-year">
+                            <button class="btn btn-primary btn-sm" type="submit" id="date-form-submit">change</button>
+                        </form>
+                    </div>
+                    <div class="d-flex justify-content-center">
+                        <div class="pie-wrapper">
+                            <canvas id="pie-chart-today"></canvas>
+                        </div>
+                    </div>
+            </div>
+
             <div class="bar-wrapper">
-                <div class="form-wrapper">
+                <div class="d-flex justify-content-center">
 
                     <form action="/statistics/specific">
-                        <select name="year" id="" onchange="this.form.submit()">
+                        <select id="statistics-select-year" name="year" onchange="this.form.submit()">
                             <th:block th:each="year, i : ${years}">
-                                <option  th:if="${prevYear == year}" th:id="yearSelected" th:value="${year}" th:text="${year}" selected></option>
-                                <option  th:unless="${prevYear == year}" th:id="'year' + ${i.count}" th:value="${year}" th:text="${year}"></option>
+                                <option th:if="${prevYear == year}" th:id="yearSelected" th:value="${year}"
+                                    th:text="${year}" selected></option>
+                                <option th:unless="${prevYear == year}" th:id="'year' + ${i.count}" th:value="${year}"
+                                    th:text="${year}"></option>
                             </th:block>
                         </select>
                     </form>
@@ -45,12 +58,14 @@
                         <input type="hidden" name="year" id="week-form-year">
                         <select name="week" id="">
                             <th:block th:each="week, i : ${weeks}">
-                                <option th:if="${prevWeek == week}" th:id="weekSelected" th:value="${week}" th:text="${week}" selected></option>
-                                <option th:unless="${prevWeek == week}" th:id="'week' + ${i.count}" th:value="${week}" th:text="${week}"></option>
+                                <option th:if="${prevWeek == week}" th:id="weekSelected" th:value="${week}"
+                                    th:text="${week}" selected></option>
+                                <option th:unless="${prevWeek == week}" th:id="'week' + ${i.count}" th:value="${week}"
+                                    th:text="${week}"></option>
                             </th:block>
                         </select>
 
-                        <button id="week-form-submit" type="submit"> change </button>
+                        <button class="btn btn-primary btn-sm" id="week-form-submit" type="submit"> change </button>
                     </form>
                 </div>
                 <div class="bar-wrapper">
@@ -62,12 +77,13 @@
     </div>
 
     <script th:inline="javascript">
-        var times = [[${times}]];
-        var weekTime = [[${weekTime}]];
+        var times = [[${ times }]];
+        var weekTime = [[${ weekTime }]];
     </script>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="/script/chart.js"></script>
     <script src="/script/statistics.js"></script>
 </body>
+
 </html>

@@ -3,12 +3,20 @@ body {
 }
 
 .wrapper {
-  background-color: white;
+  background-color: rgb(255, 255, 255);
 }
 
 .container {
   font-family: 'Poppins', sans-serif;
   max-width: 500px;
+}
+
+.container .pie-wrapper {
+  width: 60%;
+}
+
+#statistics-select-year {
+  margin-top: 1px;
 }
 
 .timerDisplay {
