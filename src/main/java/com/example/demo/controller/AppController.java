@@ -37,7 +37,7 @@ public class AppController {
 
     @GetMapping("/allActivity") 
     public String allActivity(Model model) {
-        model.addAttribute("items", timestampService.getAllItemsByDateOrder());
+        model.addAttribute("items", timestampService.getAllItems());
         return "allActivity";
     }
             

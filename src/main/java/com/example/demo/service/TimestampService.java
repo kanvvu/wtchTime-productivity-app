@@ -21,6 +21,8 @@ public class TimestampService {
         this.timestampRepository = timestampRepository;
     }
 
+
+
     public void addNewTimestamp(Timestamp timestamp) {
         LocalDate now = LocalDate.now();
         if (timestamp.getDate() == null) {
@@ -37,6 +39,12 @@ public class TimestampService {
         List<Timestamp> result = timestampRepository.findAllByDate(date);
         Collections.reverse(result);
         return  result;
+    }
+
+    public List<Timestamp> getAllItems() {
+        List<Timestamp> result = timestampRepository.findAll();
+        Collections.reverse(result);
+        return result;
     }
 
     public List<Timestamp> getLatestNItems(int n) {
