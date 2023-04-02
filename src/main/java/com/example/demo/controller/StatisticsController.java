@@ -46,6 +46,8 @@ public class StatisticsController {
         model.addAttribute("weeks", timestampService.getDistinctWeeksByYear(year));
         model.addAttribute("years", timestampService.getDistinctYears());
 
+        model.addAttribute("containsData",!timestampService.getDistinctYears().isEmpty());
+
         model.addAttribute("prevYear", year);
         model.addAttribute("prevWeek", week);
         return "statistics";
@@ -65,6 +67,7 @@ public class StatisticsController {
             model.addAttribute("weeks", distinctWeeks); 
 
         }
+        model.addAttribute("containsData",!distinctYears.isEmpty());
         
         model.addAttribute("years", distinctYears);
         return "statistics";

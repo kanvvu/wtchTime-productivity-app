@@ -12,58 +12,69 @@
                 <a class="btn btn-outline-primary" href="/">go back home</a>
             </div>
 
-            <div class="py-4">
-                    <div class="">
-                        <form class="d-flex justify-content-center" action="/statistics/specific" method="get">
-                            <div class="px-2">
-                                <input type="date" name="dayDate">
+
+                <div th:if="not ${containsData}">
+                    <h5 class="pt-2">NOT ENOUGH DATA</h5>
+                </div>
+                <div th:unless="not ${containsData}">
+                    <div class="py-4">
+                            <div class="">
+                                <form class="d-flex justify-content-center" action="/statistics/specific" method="get">
+                                    <div class="px-2">
+                                        <input type="date" name="dayDate">
+                                    </div>
+                                    <input type="hidden" name="week" id="form-week">
+                                    <input type="hidden" name="year" id="form-year">
+                                    <button class="btn btn-primary btn-sm" type="submit" id="date-form-submit">change</button>
+                                </form>
                             </div>
-                            <input type="hidden" name="week" id="form-week">
-                            <input type="hidden" name="year" id="form-year">
-                            <button class="btn btn-primary btn-sm" type="submit" id="date-form-submit">change</button>
-                        </form>
+                            <div class="d-flex justify-content-center" th:if="${times.isEmpty()}">
+                                <h5>NO DATA</h5>
+                            </div>
+                            <div th:unless="${times.isEmpty()}">
+                                <div class="d-flex justify-content-center">
+                                    <div class="pie-wrapper">
+                                        <canvas id="pie-chart-today"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+
                     </div>
-                    <div class="d-flex justify-content-center">
-                        <div class="pie-wrapper">
-                            <canvas id="pie-chart-today"></canvas>
+
+                    <div class="bar-wrapper">
+                        <div class="d-flex justify-content-center">
+
+                            <form action="/statistics/specific">
+                                <select id="statistics-select-year" name="year" onchange="this.form.submit()">
+                                    <th:block th:each="year, i : ${years}">
+                                        <option th:if="${prevYear == year}" th:id="yearSelected" th:value="${year}"
+                                            th:text="${year}" selected></option>
+                                        <option th:unless="${prevYear == year}" th:id="'year' + ${i.count}" th:value="${year}"
+                                            th:text="${year}"></option>
+                                    </th:block>
+                                </select>
+                            </form>
+
+                            <form action="/statistics/specific">
+                                <input type="hidden" name="year" id="week-form-year">
+                                <select name="week" id="">
+                                    <th:block th:each="week, i : ${weeks}">
+                                        <option th:if="${prevWeek == week}" th:id="weekSelected" th:value="${week}"
+                                            th:text="${week}" selected></option>
+                                        <option th:unless="${prevWeek == week}" th:id="'week' + ${i.count}" th:value="${week}"
+                                            th:text="${week}"></option>
+                                    </th:block>
+                                </select>
+
+                                <button class="btn btn-primary btn-sm" id="week-form-submit" type="submit"> change </button>
+                            </form>
+                        </div>
+                        <div class="bar-wrapper">
+                            <canvas id="bar-chart-week"></canvas>
                         </div>
                     </div>
-            </div>
-
-            <div class="bar-wrapper">
-                <div class="d-flex justify-content-center">
-
-                    <form action="/statistics/specific">
-                        <select id="statistics-select-year" name="year" onchange="this.form.submit()">
-                            <th:block th:each="year, i : ${years}">
-                                <option th:if="${prevYear == year}" th:id="yearSelected" th:value="${year}"
-                                    th:text="${year}" selected></option>
-                                <option th:unless="${prevYear == year}" th:id="'year' + ${i.count}" th:value="${year}"
-                                    th:text="${year}"></option>
-                            </th:block>
-                        </select>
-                    </form>
-
-                    <form action="/statistics/specific">
-                        <input type="hidden" name="year" id="week-form-year">
-                        <select name="week" id="">
-                            <th:block th:each="week, i : ${weeks}">
-                                <option th:if="${prevWeek == week}" th:id="weekSelected" th:value="${week}"
-                                    th:text="${week}" selected></option>
-                                <option th:unless="${prevWeek == week}" th:id="'week' + ${i.count}" th:value="${week}"
-                                    th:text="${week}"></option>
-                            </th:block>
-                        </select>
-
-                        <button class="btn btn-primary btn-sm" id="week-form-submit" type="submit"> change </button>
-                    </form>
                 </div>
-                <div class="bar-wrapper">
-                    <canvas id="bar-chart-week"></canvas>
-                </div>
-            </div>
         </div>
-
     </div>
 
     <script th:inline="javascript">

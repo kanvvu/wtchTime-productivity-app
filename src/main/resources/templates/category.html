@@ -24,10 +24,8 @@
                     <tr>
                         <th></th>
                         <th></th>
-                        <th></th>
                     </tr>
                     <tr th:each="cat : ${categories}">
-                        <td th:text=${cat.id}></td>
                         <td th:text="${cat.categoryName}"></td>
                         <td>
                             <a class="btn btn-danger btn-sm" th:href="@{category/delete/{id}(id=${cat.id})}">Delete</a>

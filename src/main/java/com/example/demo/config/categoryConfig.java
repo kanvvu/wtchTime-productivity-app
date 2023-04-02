@@ -22,7 +22,7 @@ public class categoryConfig {
                     new Category("Learning"),
                     new Category("Chilling"),
                     new Category("Watching youtube")
-                    
+
             ));
         };
     }
