@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -7,6 +8,9 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.model.Timestamp;
@@ -31,6 +35,8 @@ public class TimestampService {
         if (timestamp.getDescription() == "") {
             timestamp.setDescription("Empty");
         }
+
+
         timestampRepository.save(timestamp);
 
     }
@@ -66,11 +72,12 @@ public class TimestampService {
         HashMap<String, Float> result = new HashMap<>();
         List<Timestamp> allItems = timestampRepository.findAllByDate(date);
         for (Timestamp time : allItems) {
-            if (!result.containsKey(time.getCategory().getCategoryName())){
-                result.put(time.getCategory().getCategoryName(), time.getTimeInHours());
+            String categoryName = ((time.getCategory() == null) ? "Empty" : time.getCategory().getCategoryName());
+            if (!result.containsKey(categoryName)){
+                result.put(categoryName, time.getTimeInHours());
             } else {
-                float hoursToAdd = result.get(time.getCategory().getCategoryName());
-                result.put(time.getCategory().getCategoryName(), hoursToAdd + time.getTimeInHours());
+                float hoursToAdd = result.get(categoryName);
+                result.put(categoryName, hoursToAdd + time.getTimeInHours());
             }
         }
         return result;
@@ -92,6 +99,12 @@ public class TimestampService {
         }
 
         return result;
+    }
+    public Page<Timestamp> findPaginated(int pageNo, int pageSize, String sortField, String sortDirection) {
+        Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortField).ascending() : Sort.by(sortField).descending();
+        PageRequest pageable = PageRequest.of(pageNo - 1, pageSize, sort);
+        System.out.println(pageable.toString());
+        return this.timestampRepository.findAll(pageable);
     }
 
     public List<Integer> getDistinctYears() {

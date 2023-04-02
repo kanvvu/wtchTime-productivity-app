@@ -9,6 +9,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Transient;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 
 @Entity
@@ -27,6 +29,7 @@ public class Timestamp {
     private float timeInHours;
 
     @ManyToOne
+    //@OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "category_id")
     private Category category;
     
@@ -44,6 +47,13 @@ public class Timestamp {
         this.description = description;
         this.date = date;
         this.category = category;
+
+        float timeInHours = (float) hours;
+
+        if (minutes != 0) timeInHours +=(float) minutes/60;
+        if (seconds != 0) timeInHours +=(float) seconds/3600;
+
+        this.timeInHours =  timeInHours;
     }
 
     public Timestamp(Long hours, Long minutes, Long seconds, Long milliseconds, String description, LocalDate date, Category category) {
@@ -176,12 +186,13 @@ public class Timestamp {
 
 
     public float getTimeInHours() {
-        float result = (float) hours;
+        float timeInHours = (float) hours;
 
-        if (minutes != 0) result +=(float) minutes/60;
-        if (seconds != 0) result +=(float) seconds/3600;
-        System.out.println(result);
-        return result;
+        if (minutes != 0) timeInHours +=(float) minutes/60;
+        if (seconds != 0) timeInHours +=(float) seconds/3600;
+
+        this.timeInHours =  timeInHours;
+        return this.timeInHours;
 
     }
 

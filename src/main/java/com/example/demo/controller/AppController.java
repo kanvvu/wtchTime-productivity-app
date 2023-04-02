@@ -2,12 +2,10 @@ package com.example.demo.controller;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 
 import com.example.demo.model.Timestamp;
 import com.example.demo.service.TimestampService;
@@ -37,8 +35,7 @@ public class AppController {
 
     @GetMapping("/allActivity") 
     public String allActivity(Model model) {
-        model.addAttribute("items", timestampService.getAllItems());
-        return "allActivity";
+        return this.findPaginated(1, "date","asc", model);
     }
             
 
@@ -54,6 +51,25 @@ public class AppController {
         System.out.println(timestamp);
         timestampService.addNewTimestamp(timestamp);
         return "redirect:/";
+    }
+
+    @GetMapping("/allActivity/page/{pageNo}")
+    public String findPaginated(@PathVariable ("pageNo") int pageNo, @RequestParam("sortField") String sortField, @RequestParam("sortDir") String sortDir, Model model) {
+        int pageSize = 5;
+
+        Page<Timestamp> page = timestampService.findPaginated(pageNo, pageSize, sortField, sortDir);
+
+        model.addAttribute("currentPage", pageNo);
+        model.addAttribute("totalPages", page.getTotalPages());
+        model.addAttribute("totalItems", page.getTotalElements());
+
+        model.addAttribute("sortField", sortField);
+        model.addAttribute("sortDir", sortDir);
+        model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
+
+        model.addAttribute("listTimestamps", page.getContent());
+        model.addAttribute("hasContent", page.hasContent());
+        return "allActivity";
     }
     
 

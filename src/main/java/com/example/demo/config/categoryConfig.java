@@ -16,7 +16,6 @@ public class categoryConfig {
     CommandLineRunner commandLineRunner(categoryRepository repository) {
         return args -> {
             repository.saveAll(List.of(
-                    new Category("Empty"),
                     new Category("Programming"),
                     new Category("Reading"),
                     new Category("Learning"),

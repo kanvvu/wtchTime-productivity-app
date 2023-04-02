@@ -9,32 +9,69 @@
         <div class="wrapper d-flex flex-column p-2 mt-2 rounded">
             <h2>All latest activity:</h2>
             
-            <div th:if="${items.isEmpty}">
+            <div th:if="not ${hasContent}">
                 none
             </div>
 
-            <div th:unless="${items.isEmpty}" class="timestamp">
+            <div th:unless="not ${hasContent}" class="timestamp">
                 <table class="table table-bordered">
                     <tr>
-                        <th>date</th>
+                        <th>
+                            <a class="text-decoration-none" th:href="@{'/allActivity/page/' + ${currentPage} + '?sortField=date&sortDir=' + ${reverseSortDir}}">data</a>
+                        </th>
+<!--                        <th>-->
+<!--                            <a class="text-decoration-none" th:href="@{'/allActivity/page/' + ${currentPage} + '?sortField=timeInHours&sortDir=' + ${reverseSortDir}}">duration</a>-->
+<!--                        </th>-->
                         <th>duration</th>
-                        <th>category</th>
-                        <th>description</th>
+                        <th>
+                            <a class="text-decoration-none" th:href="@{'/allActivity/page/' + ${currentPage} + '?sortField=category&sortDir=' + ${reverseSortDir}}">category</a>
+                        </th>
+                        <th>
+                            <a class="text-decoration-none" th:href="@{'/allActivity/page/' + ${currentPage} + '?sortField=description&sortDir=' +  ${reverseSortDir}}">description</a>
+                        </th>
                     </tr>
-                    <tr th:each="item : ${items}">
+                    <tr th:each="item : ${listTimestamps}">
                         <td class="date" th:text="${item.getDate}">
                         <td class="time" th:text="${item.getTime}">
-                        <td th:text="${item.category.categoryName}">
+                        <td th:if="${item.category} == null">Empty</td>
+                        <td th:unless="${item.category} == null" th:text="${item.category.categoryName}">
                         <td th:text="${item.description}">
                     </tr>
                 </table>
             </div>
 
+            <div th:if = "${totalPages > 1}">
+                <div class = "row ">
+                    <div class="col-4">
+                        Total Rows: [[${totalItems}]]
+                    </div>
+                    <div class="col-2">
+                    <span th:each="i: ${#numbers.sequence(1, totalPages)}">
+                        <a th:if="${currentPage != i}" th:href="@{'/allActivity/page/' + ${i} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">[[${i}]]</a>
+                        <span th:unless="${currentPage != i}">[[${i}]]</span>
+                    </span>
+                    </div>
+                    <div class="col-2">
+                        <a th:if="${currentPage > 1}" th:href="@{'/allActivity/page/' + ${currentPage - 1} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Prev</a>
+                        <span th:unless="${currentPage > 1}">Prev</span>
+                    </div>
+                    <div class="col-2">
+                        <a th:if="${currentPage < totalPages}" th:href="@{'/allActivity/page/' + ${currentPage + 1} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Next</a>
+                        <span th:unless="${currentPage < totalPages}">Next</span>
+                    </div>
+
+                    <div class="col-2">
+                        <a th:if="${currentPage < totalPages}" th:href="@{'/allActivity/page/' + ${totalPages} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Last</a>
+                        <span th:unless="${currentPage < totalPages}">Last</span>
+                    </div>
+                </div>
+            </div>
+
             <div class="p-2 d-flex justify-content-center">
                 <a class="btn btn-outline-primary" href="/">go back to home</a>
             </div>
-        </div>
 
+        </div>
     </div>
 
     <div th:replace="fragments/footer :: footer"></div>

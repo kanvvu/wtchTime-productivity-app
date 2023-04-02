@@ -17,9 +17,11 @@
                     <div class="d-flex justify-content-center p-1">
                         <label class="px-2">Category</label>
                         <select name="categories" id="cat">
+                            <option></option>
                             <div th:each="cat : ${categories}">
                                 <option th:value="${cat.id}" th:text="${cat.categoryName}"></option>
                             </div>
+
                         </select>
                     </div>
                     <div class="d-flex justify-content-center p-1">
@@ -80,7 +82,8 @@
                                 <div th:if="${i.count < 6}">
                                     <td class="date" th:text="${item.date}">
                                     <td class="time" th:text="${item.getTime}">
-                                    <td th:text="${item.category.categoryName}">
+                                    <td th:if="${item.category} == null">Empty</td>
+                                    <td th:unless="${item.category} == null" th:text="${item.category.categoryName}">
                                     <td th:text="${item.description}">
                                 </div>
                             </tr>
