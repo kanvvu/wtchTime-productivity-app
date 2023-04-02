@@ -33,46 +33,10 @@ public class AppController {
         return "index";
     }
 
-    @GetMapping("/allActivity") 
-    public String allActivity(Model model) {
-        return this.findPaginated(1, "date","asc", model);
-    }
-            
-
-    @PostMapping("/")
-    public String saveTimestamp(@RequestBody Timestamp timestamp) {
-        timestampService.addNewTimestamp(timestamp);
-        System.out.println(timestamp);
-        return "redirect:/test";
-    }
-
     @PostMapping("/save")
-    public String saveFormTimestamp(@ModelAttribute("newItem") Timestamp timestamp) {
-        System.out.println(timestamp);
+    public String saveFormTimestamp(@ModelAttribute Timestamp timestamp) {
         timestampService.addNewTimestamp(timestamp);
-        return "redirect:/";
+        return "redirect:";
     }
 
-    @GetMapping("/allActivity/page/{pageNo}")
-    public String findPaginated(@PathVariable ("pageNo") int pageNo, @RequestParam("sortField") String sortField, @RequestParam("sortDir") String sortDir, Model model) {
-        int pageSize = 5;
-
-        Page<Timestamp> page = timestampService.findPaginated(pageNo, pageSize, sortField, sortDir);
-
-        model.addAttribute("currentPage", pageNo);
-        model.addAttribute("totalPages", page.getTotalPages());
-        model.addAttribute("totalItems", page.getTotalElements());
-
-        model.addAttribute("sortField", sortField);
-        model.addAttribute("sortDir", sortDir);
-        model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
-
-        model.addAttribute("listTimestamps", page.getContent());
-        model.addAttribute("hasContent", page.hasContent());
-        return "allActivity";
-    }
-    
-
-
-    
 }

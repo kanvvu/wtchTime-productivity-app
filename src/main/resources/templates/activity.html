@@ -17,18 +17,19 @@
                 <table class="table table-bordered">
                     <tr>
                         <th>
-                            <a class="text-decoration-none" th:href="@{'/allActivity/page/' + ${currentPage} + '?sortField=date&sortDir=' + ${reverseSortDir}}">data</a>
+                            <a class="text-decoration-none" th:href="@{'/activity/page/' + ${currentPage} + '?sortField=date&sortDir=' + ${reverseSortDir}}">data</a>
                         </th>
 <!--                        <th>-->
-<!--                            <a class="text-decoration-none" th:href="@{'/allActivity/page/' + ${currentPage} + '?sortField=timeInHours&sortDir=' + ${reverseSortDir}}">duration</a>-->
+<!--                            <a class="text-decoration-none" th:href="@{'/activity/page/' + ${currentPage} + '?sortField=timeInHours&sortDir=' + ${reverseSortDir}}">duration</a>-->
 <!--                        </th>-->
                         <th>duration</th>
                         <th>
-                            <a class="text-decoration-none" th:href="@{'/allActivity/page/' + ${currentPage} + '?sortField=category&sortDir=' + ${reverseSortDir}}">category</a>
+                            <a class="text-decoration-none" th:href="@{'/activity/page/' + ${currentPage} + '?sortField=category&sortDir=' + ${reverseSortDir}}">category</a>
                         </th>
                         <th>
-                            <a class="text-decoration-none" th:href="@{'/allActivity/page/' + ${currentPage} + '?sortField=description&sortDir=' +  ${reverseSortDir}}">description</a>
+                            <a class="text-decoration-none" th:href="@{'/activity/page/' + ${currentPage} + '?sortField=description&sortDir=' +  ${reverseSortDir}}">description</a>
                         </th>
+                        <th>Option</th>
                     </tr>
                     <tr th:each="item : ${listTimestamps}">
                         <td class="date" th:text="${item.getDate}">
@@ -36,6 +37,9 @@
                         <td th:if="${item.category} == null">Empty</td>
                         <td th:unless="${item.category} == null" th:text="${item.category.categoryName}">
                         <td th:text="${item.description}">
+                        <td>
+                            <a class="btn btn-primary btn-sm" th:href="@{/activity/edit/{id}(id=${item.id})}">Edit</a>
+                        </td>
                     </tr>
                 </table>
             </div>
@@ -47,21 +51,21 @@
                     </div>
                     <div class="col-2">
                     <span th:each="i: ${#numbers.sequence(1, totalPages)}">
-                        <a th:if="${currentPage != i}" th:href="@{'/allActivity/page/' + ${i} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">[[${i}]]</a>
+                        <a th:if="${currentPage != i}" th:href="@{'/activity/page/' + ${i} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">[[${i}]]</a>
                         <span th:unless="${currentPage != i}">[[${i}]]</span>
                     </span>
                     </div>
                     <div class="col-2">
-                        <a th:if="${currentPage > 1}" th:href="@{'/allActivity/page/' + ${currentPage - 1} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Prev</a>
+                        <a th:if="${currentPage > 1}" th:href="@{'/activity/page/' + ${currentPage - 1} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Prev</a>
                         <span th:unless="${currentPage > 1}">Prev</span>
                     </div>
                     <div class="col-2">
-                        <a th:if="${currentPage < totalPages}" th:href="@{'/allActivity/page/' + ${currentPage + 1} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Next</a>
+                        <a th:if="${currentPage < totalPages}" th:href="@{'/activity/page/' + ${currentPage + 1} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Next</a>
                         <span th:unless="${currentPage < totalPages}">Next</span>
                     </div>
 
                     <div class="col-2">
-                        <a th:if="${currentPage < totalPages}" th:href="@{'/allActivity/page/' + ${totalPages} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Last</a>
+                        <a th:if="${currentPage < totalPages}" th:href="@{'/activity/page/' + ${totalPages} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Last</a>
                         <span th:unless="${currentPage < totalPages}">Last</span>
                     </div>
                 </div>

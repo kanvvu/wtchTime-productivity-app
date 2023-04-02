@@ -2,10 +2,7 @@ package com.example.demo.service;
 
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -107,6 +104,8 @@ public class TimestampService {
         return this.timestampRepository.findAll(pageable);
     }
 
+
+
     public List<Integer> getDistinctYears() {
         return timestampRepository.findDistinctYears();
     }
@@ -115,4 +114,7 @@ public class TimestampService {
         return timestampRepository.findDistinctWeeksByYear(year);
     }
 
+    public Optional<Timestamp> getItemById(Long id) {
+        return timestampRepository.findById(id);
+    }
 }

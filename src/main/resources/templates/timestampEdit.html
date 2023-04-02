@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/header :: header('Edit')"></head>
+
+<body>
+
+    <div class="container">
+        <div class="wrapper d-flex flex-column p-2 mt-2 rounded">
+            <div class="">
+                <h2>Edit timestamp</h2>
+            </div>
+            <div class="py-2">
+                <div class="form-group py-1">
+                    <label for="">Duration</label>
+                    <div class="form-control text-muted" th:text="${timestamp.get.getTime}"></div>
+                </div>
+                <form action="#" th:action="@{/activity/save}" th:object="${timestamp}" method="POST">
+                    <input type="hidden" th:field="*{id}">
+                    <input type="hidden" th:field="*{hours}" placeholder="hours" id="formHou">
+                    <input type="hidden" th:field="*{minutes}" placeholder="minutes" id="formMin">
+                    <input type="hidden" th:field="*{seconds}" placeholder="seconds" id="formSec">
+                    <input type="hidden" th:field="*{milliseconds}" placeholder="milliseconds" id="formMil">
+
+                    <div class="form-group py-1">
+                        <label for="category">Edit category</label>
+                        <select class="form-control" id="category" th:field="*{category}">
+                            <option th:each="cat : ${categories}" th:value="${cat.id}" th:text="${cat.categoryName}"></option>
+                        </select>
+                    </div>
+
+                    <div class="form-group py-1">
+                        <label for="formDes">Edit description</label>
+                        <input class="form-control" type="text" th:field="*{description}" placeholder="description" id="formDes">
+                    </div>
+                    <input type="hidden" readonly th:field="*{date}" placeholder="description" id="formDes">
+                    <div class="form-group pt-2">
+                        <button type="submit" class="btn btn-success" >Save</button>
+                    </div>
+                </form>
+            </div>
+            <div class="p-2 d-flex justify-content-center">
+                <a class="btn btn-outline-primary" href="/activity">go back</a>
+            </div>
+        </div>
+
+    </div>
+
+    <div th:replace="fragments/footer :: footer"></div>
+
+</body>
+</html>
