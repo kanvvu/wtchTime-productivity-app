@@ -1,6 +1,6 @@
 package com.example.demo.model;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 
 import jakarta.persistence.Entity;
@@ -9,8 +9,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Transient;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 
 
 @Entity
@@ -23,7 +21,7 @@ public class Timestamp {
     private Long seconds;
     private Long milliseconds;
     private String description;
-    private LocalDate date;
+    private LocalDateTime date;
 
     @Transient
     private float timeInHours;
@@ -38,7 +36,7 @@ public class Timestamp {
 
     
     public Timestamp(Long id, Long hours, Long minutes, Long seconds, Long milliseconds, String description,
-            LocalDate date, Category category) {
+                     LocalDateTime date, Category category) {
         this.id = id;
         this.hours = hours;
         this.minutes = minutes;
@@ -56,7 +54,7 @@ public class Timestamp {
         this.timeInHours =  timeInHours;
     }
 
-    public Timestamp(Long hours, Long minutes, Long seconds, Long milliseconds, String description, LocalDate date, Category category) {
+    public Timestamp(Long hours, Long minutes, Long seconds, Long milliseconds, String description, LocalDateTime date, Category category) {
         this.hours = hours;
         this.minutes = minutes;
         this.seconds = seconds;
@@ -128,11 +126,11 @@ public class Timestamp {
         this.description = description;
     }
 
-    public LocalDate getDate() {
+    public LocalDateTime getDate() {
         return date;
     }
 
-    public void setDate(LocalDate date) {
+    public void setDate(LocalDateTime date) {
         this.date = date;
     }
 

@@ -2,6 +2,7 @@ package com.example.demo.service;
 
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +26,7 @@ public class TimestampService {
 
 
     public void addNewTimestamp(Timestamp timestamp) {
-        LocalDate now = LocalDate.now();
+        LocalDateTime now = LocalDateTime.now();
         if (timestamp.getDate() == null) {
             timestamp.setDate(now);
         }
@@ -52,7 +53,7 @@ public class TimestampService {
 
     public List<Timestamp> getLatestNItems(int n) {
         List<Timestamp> result = new ArrayList<>();
-        List<Timestamp> allItems = getAllItemsByDate(LocalDate.now());
+        List<Timestamp> allItems = getAllItemsByDate(LocalDateTime.now().toLocalDate());
         for (int i = 0; (i < n) && (i < allItems.size()); i++) {
             result.add(allItems.get(i));
         }

@@ -32,7 +32,7 @@
                         <th>Option</th>
                     </tr>
                     <tr th:each="item : ${listTimestamps}">
-                        <td class="date" th:text="${item.getDate}">
+                        <td class="date" th:text="${item.getDate.toLocalDate()}">
                         <td class="time" th:text="${item.getTime}">
                         <td th:if="${item.category} == null">Empty</td>
                         <td th:unless="${item.category} == null" th:text="${item.category.categoryName}">

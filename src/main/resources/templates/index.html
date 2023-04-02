@@ -64,7 +64,7 @@
                             <a href="/statistics" class="btn btn-sm">statistics</a>
                         </div>
                     </div>
-                
+
             </div>
 
             <div class="wrapper rounded p-2 mt-4">
@@ -81,7 +81,7 @@
                             </tr>
                             <tr th:each="item, i : ${times}">
                                 <div th:if="${i.count < 6}">
-                                    <td class="date" th:text="${item.date}">
+                                    <td class="date" th:text="${item.date.toLocalDate()}">
                                     <td class="time" th:text="${item.getTime}">
                                     <td th:if="${item.category} == null">Empty</td>
                                     <td th:unless="${item.category} == null" th:text="${item.category.categoryName}">

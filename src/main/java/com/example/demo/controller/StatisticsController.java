@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 
@@ -34,7 +35,7 @@ public class StatisticsController {
         }
 
         if (dayDate == null) {
-            model.addAttribute("times", timestampService.getHoursByDay(LocalDate.now()));
+            model.addAttribute("times", timestampService.getHoursByDay(LocalDateTime.now().toLocalDate()));
         } else {
             model.addAttribute("times", timestampService.getHoursByDay(dayDate));
         }
@@ -55,7 +56,7 @@ public class StatisticsController {
 
     @GetMapping
     public String home(Model model) {
-        model.addAttribute("times", timestampService.getHoursByDay(LocalDate.now()));
+        model.addAttribute("times", timestampService.getHoursByDay(LocalDateTime.now().toLocalDate()));
         List<Integer> distinctYears = timestampService.getDistinctYears();
         List<Integer> distinctWeeks;
         if (distinctYears.isEmpty()) {
