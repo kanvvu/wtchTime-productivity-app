@@ -24,8 +24,18 @@
 
                     <div class="form-group py-1">
                         <label for="category">Edit category</label>
-                        <select class="form-control" id="category" th:field="*{category}">
-                            <option th:each="cat : ${categories}" th:value="${cat.id}" th:text="${cat.categoryName}"></option>
+                        <select name="category" class="form-control" id="category">
+                            <div th:if="${timestamp.get.getCategory()} == null">
+                                <option placeholder="Empty"></option>
+                                <option th:each="cat : ${categories}" th:value="${cat.id}" th:text="${cat.categoryName}"></option>
+                            </div>
+                            <div th:unless="${timestamp.get.getCategory()} == null">
+                                <option th:value="${timestamp.get().getCategory().getId()}" th:text="${timestamp.get.getCategory.getCategoryName()}"></option>
+                                <option placeholder="Empty"></option>
+                                <div th:each="cat : ${categories}">
+                                    <option th:if="${timestamp.get.getCategory.getId} != ${cat.id}" th:value="${cat.id}" th:text="${cat.categoryName}"></option>
+                                </div>
+                            </div>
                         </select>
                     </div>
 
