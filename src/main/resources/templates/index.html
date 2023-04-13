@@ -45,7 +45,7 @@
                             <input type="hidden" th:field="*{milliseconds}" placeholder="milliseconds" id="formMil">
                             <input type="hidden" th:field="*{category}" placeholder="category" id="formCat">
                             <input type="hidden" th:field="*{description}" placeholder="description" id="formDes">
-                            <input type="hidden" th:field="*{date}" placeholder="description" id="formDes">
+                            <input type="datetime-local" th:field="*{date}" placeholder="description" id="formDes">
                             <button type="submit" class="btn btn-success" id="formSumbit">Save</button>
                         </form>
                     </div>
@@ -70,8 +70,8 @@
             <div class="wrapper rounded p-2 mt-4">
                 <div class="timestamps">
                     <h2>Last activity:</h2>
-                    <div th:if="${times.isEmpty}">none</div>
-                    <div th:unless="${times.isEmpty}" class="timestamp">
+                    <div th:if="not ${hasContent}">none</div>
+                    <div th:unless="not ${hasContent}" class="timestamp">
                         <table class="table table-bordered">
                             <tr>
                                 <th>date</th>
@@ -89,7 +89,7 @@
                                 </div>
                             </tr>
                         </table>
-                        <div th:if="${times.size == 6}">
+                        <div th:if="${hasNextPage}">
                             <a href="/activity">see all activity</a>
                         </div>
                     </div>

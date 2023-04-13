@@ -22,7 +22,7 @@ public class ActivityController {
     }
     @GetMapping()
     public String allActivity(Model model) {
-        return this.findPaginated(1, "date","asc", model);
+        return this.findPaginated(1, "date","desc", model);
     }
     @GetMapping("/page/{pageNo}")
     public String findPaginated(@PathVariable("pageNo") int pageNo, @RequestParam("sortField") String sortField, @RequestParam("sortDir") String sortDir, Model model) {

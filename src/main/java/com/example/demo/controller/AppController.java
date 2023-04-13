@@ -3,6 +3,8 @@ package com.example.demo.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -27,7 +29,11 @@ public class AppController {
     @GetMapping("/")
     public String hello(Model model) {
         Timestamp newTimestamp = new Timestamp();
-        model.addAttribute("times", timestampService.getLatestNItems(6));
+        Page<Timestamp> page = timestampService.getLatestNItems(5);
+
+        model.addAttribute("times", page.getContent());
+        model.addAttribute("hasNextPage", page.hasNext());
+        model.addAttribute("hasContent", page.hasContent());
         model.addAttribute("newTime", newTimestamp);
         model.addAttribute("categories", categoryService.getAllItems());
         return "index";

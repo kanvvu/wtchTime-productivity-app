@@ -23,7 +23,6 @@ public class Timestamp {
     private String description;
     private LocalDateTime date;
 
-    @Transient
     private float timeInHours;
 
     @ManyToOne
@@ -62,6 +61,13 @@ public class Timestamp {
         this.description = description;
         this.date = date;
         this.category = category;
+
+        float timeInHours = (float) hours;
+
+        if (minutes != 0) timeInHours +=(float) minutes/60;
+        if (seconds != 0) timeInHours +=(float) seconds/3600;
+
+        this.timeInHours =  timeInHours;
     }
 
 
@@ -184,12 +190,12 @@ public class Timestamp {
 
 
     public float getTimeInHours() {
-        float timeInHours = (float) hours;
-
-        if (minutes != 0) timeInHours +=(float) minutes/60;
-        if (seconds != 0) timeInHours +=(float) seconds/3600;
-
-        this.timeInHours =  timeInHours;
+//        float timeInHours = (float) hours;
+//
+//        if (minutes != 0) timeInHours +=(float) minutes/60;
+//        if (seconds != 0) timeInHours +=(float) seconds/3600;
+//
+//        this.timeInHours =  timeInHours;
         return this.timeInHours;
 
     }

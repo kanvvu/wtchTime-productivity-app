@@ -1,0 +1,1 @@
+insert into category (category_name) values ('Programming'), ('Reading'), ('Learning'), ('Chilling'), ('Watching youtube');

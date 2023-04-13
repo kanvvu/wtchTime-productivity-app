@@ -8,6 +8,7 @@ import java.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -27,13 +28,21 @@ public class TimestampService {
 
     public void addNewTimestamp(Timestamp timestamp) {
         LocalDateTime now = LocalDateTime.now();
+
         if (timestamp.getDate() == null) {
             timestamp.setDate(now);
         }
+
         if (timestamp.getDescription() == "") {
             timestamp.setDescription("Empty");
         }
 
+        float timeInHours = (float) timestamp.getHours();
+
+        if (timestamp.getMinutes() != 0) timeInHours +=(float) timestamp.getMinutes()/60;
+        if (timestamp.getSeconds() != 0) timeInHours +=(float) timestamp.getSeconds()/3600;
+
+        timestamp.setTimeInHours(timeInHours);
 
         timestampRepository.save(timestamp);
 
@@ -51,14 +60,11 @@ public class TimestampService {
         return result;
     }
 
-    public List<Timestamp> getLatestNItems(int n) {
+    public Page<Timestamp> getLatestNItems(int n) {
         List<Timestamp> result = new ArrayList<>();
-        List<Timestamp> allItems = getAllItemsByDate(LocalDateTime.now().toLocalDate());
-        for (int i = 0; (i < n) && (i < allItems.size()); i++) {
-            result.add(allItems.get(i));
-        }
+        PageRequest pageable = PageRequest.of(0, n,Sort.by("date").descending());
 
-        return result;
+        return this.timestampRepository.findAllByDate(LocalDateTime.now().toLocalDate(), pageable);
 
     }
 
@@ -101,7 +107,6 @@ public class TimestampService {
     public Page<Timestamp> findPaginated(int pageNo, int pageSize, String sortField, String sortDirection) {
         Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortField).ascending() : Sort.by(sortField).descending();
         PageRequest pageable = PageRequest.of(pageNo - 1, pageSize, sort);
-        System.out.println(pageable.toString());
         return this.timestampRepository.findAll(pageable);
     }
 
